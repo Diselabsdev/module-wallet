@@ -1,0 +1,35 @@
+<?php
+/** @var \Diselabs\Wallet\Block\Customer\Wallet $block */
+?>
+<div class="wallet-container">
+    <div class="wallet-balance">
+        <h2><?= __('My Wallet Balance') ?></h2>
+        <div class="balance-amount">
+            <?= $block->escapeHtml($block->formatPrice($block->getWalletBalance())) ?>
+        </div>
+    </div>
+
+    <div class="wallet-transactions">
+        <h3><?= __('Transaction History') ?></h3>
+        <table class="data table">
+            <thead>
+                <tr>
+                    <th><?= __('Date') ?></th>
+                    <th><?= __('Type') ?></th>
+                    <th><?= __('Amount') ?></th>
+                    <th><?= __('Description') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($block->getTransactionHistory() as $transaction): ?>
+                    <tr>
+                        <td><?= $block->escapeHtml($transaction->getCreatedAt()) ?></td>
+                        <td><?= $block->escapeHtml(ucfirst($transaction->getType())) ?></td>
+                        <td><?= $block->escapeHtml($block->formatPrice($transaction->getAmount())) ?></td>
+                        <td><?= $block->escapeHtml($transaction->getDescription()) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

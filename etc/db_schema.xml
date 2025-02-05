@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="diselabs_wallet_account" resource="default" engine="innodb" comment="Customer Wallet Account">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="decimal" name="balance" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Wallet Balance"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="DISELABS_WALLET_ACCOUNT_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" 
+            table="diselabs_wallet_account" column="customer_id" referenceTable="customer_entity" 
+            referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="DISELABS_WALLET_ACCOUNT_CUSTOMER_ID">
+            <column name="customer_id"/>
+        </constraint>
+    </table>
+    <table name="diselabs_wallet_transaction" resource="default" engine="innodb" comment="Wallet Transactions">
+        <column xsi:type="int" name="transaction_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Transaction ID"/>
+        <column xsi:type="int" name="wallet_id" padding="10" unsigned="true" nullable="false" comment="Wallet ID"/>
+        <column xsi:type="varchar" name="type" nullable="false" length="50" comment="Transaction Type"/>
+        <column xsi:type="decimal" name="amount" scale="4" precision="12" unsigned="false" nullable="false" comment="Transaction Amount"/>
+        <column xsi:type="varchar" name="description" nullable="true" length="255" comment="Transaction Description"/>
+        <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" comment="Order ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="transaction_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="DISELABS_WALLET_TRANSACTION_WALLET_ID_WALLET_ACCOUNT_ENTITY_ID"
+            table="diselabs_wallet_transaction" column="wallet_id" referenceTable="diselabs_wallet_account"
+            referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+</schema>
