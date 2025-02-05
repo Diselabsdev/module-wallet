@@ -12,7 +12,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "~7.4.0||~8.1.0",
+        "php": "~7.4.0||~8.1.0||~8.2.0||~8.3.0",
         "magento/framework": ">=103.0.0",
         "magento/module-customer": ">=103.0.0",
         "magento/module-checkout": ">=100.4.0",
@@ -24,6 +24,12 @@
         ],
         "psr-4": {
             "Diselabs\\Wallet\\": ""
+        }
+    },
+    "repositories": {
+        "diselabs-wallet": {
+            "type": "vcs",
+            "url": "https://github.com/Diselabsdev/module-wallet.git"
         }
     }
 }
